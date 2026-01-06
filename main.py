@@ -139,7 +139,7 @@ class Database:
         try:
             for index in self.rand_list:
                 j += 1
-                print(f"{j}/{len(self.rand_list)}")
+                print(f"{j}/{len(self.rand_list)}   序号：{self.db[index]['index']}  章节：{self.db[index]['chapter']}")
                 print("[单选题]", end='') if self.db[index]['type'] == 1 else print("[\033[1;6;33m多选题\033[0m]", end='')
                 self.printf(index)
                 ans = input()
