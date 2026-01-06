@@ -92,7 +92,6 @@ class Database:
         while True:
             num = random.randint(0, len(self.db)-1)
             test = self.db[num]
-            print(f"{len(self.db)},{len(done_list)}")
             if len(self.db)-len(done_list) <= l1:
                 for i in range(0,len(self.db)-1):
                     if i not in done_list:
@@ -102,7 +101,7 @@ class Database:
                 self.rand_list.append(num)
             if len(self.rand_list) >= l1:
                 break
-        while self.type==0:
+        while self.type!=1:
             num = random.randint(0, len(self.db)-1)
             test = self.db[num]
             if len(self.db)-len(done_list) <= l2:
