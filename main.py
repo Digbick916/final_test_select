@@ -1,6 +1,17 @@
 import json
 import random
+import sys
 import os
+from pathlib import Path
+
+if getattr(sys, 'frozen', False):
+    # 打包模式：资源位于临时目录 sys._MEIPASS
+    base_path = Path(sys._MEIPASS)
+else:
+    # 开发模式：资源位于脚本所在目录
+    base_path = Path(__file__).parent
+
+
 
 class Database:
     def __init__(self):
@@ -13,7 +24,7 @@ class Database:
         self.data = {'done': [], 'wrong': []}
         self.type = 0
     def load(self):
-        with open(f"db{self.type}.json", 'r',encoding='utf-8') as f:
+        with open(f"{base_path}\\db{self.type}.json", 'r',encoding='utf-8') as f:
             self.db = json.load(f)
             f.close()
         try:
@@ -104,7 +115,8 @@ class Database:
         while self.type!=1:
             num = random.randint(0, len(self.db)-1)
             test = self.db[num]
-            if len(self.db)-len(done_list) <= l2:
+            #检测剩余题目是否少于规定的题目数量
+            if len(self.db)-len(done_list) <= l1+l2:
                 for i in range(0,len(self.db)-1):
                     if i not in done_list:
                         self.rand_list.append(i)
@@ -139,7 +151,7 @@ class Database:
         try:
             for index in self.rand_list:
                 j += 1
-                print(f"{j}/{len(self.rand_list)}")
+                print(f"{j}/{len(self.rand_list)}   序号：{self.db[index]['index']}  章节：{self.db[index]['chapter']}")
                 print("[单选题]", end='') if self.db[index]['type'] == 1 else print("[\033[1;6;33m多选题\033[0m]", end='')
                 self.printf(index)
                 ans = input()
